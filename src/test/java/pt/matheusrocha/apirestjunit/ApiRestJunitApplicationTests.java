@@ -1,4 +1,4 @@
-package pt.matheusrocha.APIRestJunit;
+package pt.matheusrocha.apirestjunit;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package pt.matheusrocha.APIRestJunit;
+package pt.matheusrocha.apirestjunit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
