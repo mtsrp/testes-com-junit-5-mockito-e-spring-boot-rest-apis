@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pt.matheusrocha.apirestjunit.domain.dto.UserDTO;
 import pt.matheusrocha.apirestjunit.services.UserService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserResource {
@@ -22,5 +24,12 @@ public class UserResource {
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable Integer id){
         return ResponseEntity.ok().body(mapper.map(service.findById(id), UserDTO.class));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> findAll(){
+        return ResponseEntity.ok()
+                .body(service.findAll()
+                        .stream().map(x -> mapper.map(x, UserDTO.class)).toList());
     }
 }
