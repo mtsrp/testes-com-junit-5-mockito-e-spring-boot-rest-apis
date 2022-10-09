@@ -7,6 +7,7 @@ import pt.matheusrocha.apirestjunit.domain.User;
 import pt.matheusrocha.apirestjunit.domain.dto.UserDTO;
 import pt.matheusrocha.apirestjunit.repositories.UserRepository;
 import pt.matheusrocha.apirestjunit.services.UserService;
+import pt.matheusrocha.apirestjunit.services.exceptions.DataIntegratyViolationException;
 import pt.matheusrocha.apirestjunit.services.exceptions.ObjectNotFoundException;
 
 import java.util.List;
@@ -32,6 +33,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(UserDTO obj) {
+        findByEmail(obj);
         return repository.save(mapper.map(obj, User.class));
+    }
+
+    private void findByEmail(UserDTO obj){
+        Optional<User> user = repository.findByEmail(obj.getEmail());
+        if(user.isPresent()){
+            throw new DataIntegratyViolationException("E-mail already exists");
+        }
     }
 }
