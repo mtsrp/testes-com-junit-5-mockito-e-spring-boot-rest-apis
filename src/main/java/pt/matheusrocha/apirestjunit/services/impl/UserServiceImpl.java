@@ -1,8 +1,10 @@
 package pt.matheusrocha.apirestjunit.services.impl;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pt.matheusrocha.apirestjunit.domain.User;
+import pt.matheusrocha.apirestjunit.domain.dto.UserDTO;
 import pt.matheusrocha.apirestjunit.repositories.UserRepository;
 import pt.matheusrocha.apirestjunit.services.UserService;
 import pt.matheusrocha.apirestjunit.services.exceptions.ObjectNotFoundException;
@@ -15,6 +17,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    private ModelMapper mapper;
+
     @Override
     public User findById(Integer id) {
         Optional<User> obj = repository.findById(id);
@@ -23,5 +28,10 @@ public class UserServiceImpl implements UserService {
 
     public List<User> findAll(){
         return repository.findAll();
+    }
+
+    @Override
+    public User create(UserDTO obj) {
+        return repository.save(mapper.map(obj, User.class));
     }
 }
